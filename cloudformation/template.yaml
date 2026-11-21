@@ -20,6 +20,7 @@ Metadata:
           - RestApiId
           - ParentId
           - ExistingResourceId
+          - RoutePath
       - Label:
           default: "Method Configuration"
         Parameters:
@@ -43,6 +44,8 @@ Metadata:
         default: "Parent Resource ID"
       ExistingResourceId:
         default: "Existing Resource ID"
+      RoutePath:
+        default: "Route Path"
       HttpMethod:
         default: "HTTP Method"
       AuthorizationType:
@@ -91,6 +94,15 @@ Parameters:
     Type: String
     Default: ""
     Description: "ID of the existing API Gateway resource the method is attached to. Required when CiSuffix is empty (not a CI build). Ignored for CI builds, where the method attaches to the resource created by PathPart."
+
+  RoutePath:
+    Type: String
+    Default: "orders"
+    MinLength: 1
+    MaxLength: 256
+    AllowedPattern: "^[a-zA-Z0-9._{}/-]+$"
+    ConstraintDescription: "Route path must be 1-256 characters and can only contain letters, numbers, periods, underscores, hyphens, slashes, and braces"
+    Description: "Full resource path of the method, used to scope the Lambda invoke permission for non-CI builds (e.g. orders or orders/{orderId}). CI builds use PathPart instead. Ignored for CI builds."
 
   HttpMethod:
     Type: String
@@ -223,15 +235,17 @@ Resources:
 
   LambdaInvokePermission:
     Type: AWS::Lambda::Permission
-    Condition: IsCiBuild
     Metadata:
       com.aws.cloudformation.Context:
-        why: "Allows API Gateway to invoke the CI-built Lambda function for the method's HTTP method and path."
+        why: "Allows API Gateway to invoke the Lambda function for this method only. CI builds use the created LambdaFunction and PathPart; non-CI builds use LambdaFunctionArn and RoutePath."
     Properties:
       Action: lambda:InvokeFunction
-      FunctionName: !Ref LambdaFunction
+      FunctionName: !If [IsCiBuild, !Ref LambdaFunction, !Ref LambdaFunctionArn]
       Principal: apigateway.amazonaws.com
-      SourceArn: !Sub "arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${RestApi}/*/${HttpMethod}/${PathPart}"
+      SourceArn: !Sub
+        - "arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiId}/*/${HttpMethod}/${Route}"
+        - ApiId: !If [IsCiBuild, !Ref RestApi, !Ref RestApiId]
+          Route: !If [IsCiBuild, !Ref PathPart, !Ref RoutePath]
 
   RestApi:
     Type: AWS::ApiGateway::RestApi
