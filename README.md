@@ -1,249 +1,141 @@
-# CloudFormation S3 Template Repository
+# CloudFormation Nested Stack Template : API Gateway Rest API Method
 
 <!-- Row 1: Status - Most Important -->
-[![Release](https://img.shields.io/github/v/release/subhamay-bhattacharyya/aws-bedrock-faq-chatbot?label=Release)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot/releases)&nbsp;[![Release Workflow](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot/actions/workflows/release.yaml/badge.svg)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot/actions/workflows/release.yaml)&nbsp;[![Issues](https://img.shields.io/github/issues/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot/issues)&nbsp;[![Last Commit](https://img.shields.io/github/last-commit/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot/commits)
+[![Release](https://img.shields.io/github/v/release/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method?label=Release)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method/releases)&nbsp;[![Release Workflow](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method/actions/workflows/release.yaml/badge.svg)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method/actions/workflows/release.yaml)&nbsp;[![Issues](https://img.shields.io/github/issues/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method/issues)&nbsp;[![Last Commit](https://img.shields.io/github/last-commit/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method/commits)
 
 <!-- Row 2: Code Quality -->
-[![Top Language](https://img.shields.io/badge/Languages-Python%20%7C%20YAML-blue)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)&nbsp;[![Commits](https://img.shields.io/github/commit-activity/t/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot/commits)
+[![Top Language](https://img.shields.io/badge/Languages-Python%20%7C%20YAML-blue)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)&nbsp;[![Commits](https://img.shields.io/github/commit-activity/t/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method/commits)
 
 <!-- Row 3: Tech Stack -->
 [![CloudFormation](https://img.shields.io/badge/CloudFormation-IaC-orange?logo=amazonaws&logoColor=white)](https://aws.amazon.com/cloudformation/)&nbsp;[![Built with Claude Code](https://img.shields.io/badge/Built_with-Claude_Code-D97757?logo=anthropic&logoColor=white)](https://claude.ai/)
 
 <!-- Row 4: Repository Info -->
-[![Files](https://img.shields.io/github/directory-file-count/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)&nbsp;[![Repo Size](https://img.shields.io/github/repo-size/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)&nbsp;[![Release Date](https://img.shields.io/github/release-date/subhamay-bhattacharyya/aws-bedrock-faq-chatbot)](https://github.com/subhamay-bhattacharyya/aws-bedrock-faq-chatbot/releases)
+[![Files](https://img.shields.io/github/directory-file-count/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)&nbsp;[![Repo Size](https://img.shields.io/github/repo-size/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)&nbsp;[![Release Date](https://img.shields.io/github/release-date/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method)](https://github.com/subhamay-bhattacharyya-cfn/cfn-nested-aws-api-gateway-method/releases)
 
 <!-- Row 5: Custom Metrics -->
-[![Custom Endpoint](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/bsubhamay/52393fb36dc28479957fbb381dda208a/raw/aws-bedrock-faq-chatbot.json)](https://gist.github.com/subhamay-bhattacharyya/52393fb36dc28479957fbb381dda208a)
+[![Custom Endpoint](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/bsubhamay/b8c944569c897ebfa5065dad9bcd3fd0/raw/cfn-nested-aws-api-gateway-method.json)](https://gist.github.com/subhamay-bhattacharyya-cfn/b8c944569c897ebfa5065dad9bcd3fd0)
 
 ---
 
-This repository contains nested CloudFormation templates for deploying S3 buckets with security best practices and optional policy enforcement.
+This repository contains a nested CloudFormation template that creates an API Gateway REST API method (with an optional REST API and path resource) backed by a Lambda function through an `AWS_PROXY` integration.
 
 ## Overview
 
-This is a **nested stack template** designed to be invoked from a parent/root CloudFormation stack. Templates are stored in this repository and should be uploaded to an S3 bucket for reference by parent stacks.
+This is a **nested stack template** designed to be invoked from a parent/root CloudFormation stack. The template lives at `cloudformation/template.yaml` and should be uploaded to S3 (or passed inline) for reference by parent stacks.
 
 ## Template Files
 
-### CloudFormation Templates
-
-- **`templates/s3-bucket.yaml`** — Nested template for S3 bucket creation (versioning, public access blocking)
-- **`templates/s3-bucket-policy.yaml`** — Optional nested template for S3 bucket policy (encryption enforcement, secure transport)
-
-### Parameter Files
-
-- **`parameters/parameters.json`** — Parameter values for development environment
+- **`cloudformation/template.yaml`** — Nested template for the REST API, path resource, and method
+- **`cloudformation/parameters.json`** — Example parameter values
+- **`cloudformation/stack-config.json`** — Stack name, template, and parameter file references
 
 ## Template Features
 
-### S3 Bucket Template (s3-bucket.yaml)
-
-- ✅ Versioning enabled by default
-- ✅ Public Access Blocking
-- ✅ Smart bucket naming (project prefix, account ID, environment, region)
-- ✅ Optional CI suffix support
-
-### S3 Bucket Policy Template (s3-bucket-policy.yaml)
-
-- ✅ Encryption enforcement on uploads
-- ✅ Secure transport enforcement (HTTPS only)
-- ✅ Optional/conditional policy rules
+- ✅ Creates a REGIONAL REST API, path resource, and method when `CiSuffix` is set (CI build)
+- ✅ Attaches the method to an existing REST API and resource when `CiSuffix` is empty
+- ✅ Lambda proxy integration (`AWS_PROXY`) or Lambda `AWS` integration
+- ✅ Authorization defaults to `AWS_IAM` (SigV4)
+- ✅ Parameterised HTTP method, authorization, integration type, and integration HTTP method
+- ✅ Rules that require existing API inputs when not a CI build
 
 ## Parameters
 
-### S3 Bucket Parameters
-
 | Parameter | Type | Default | Description |
 | ----------- | ------ | --------- | ------------- |
-| `ProjectName` | String | — | Project name to use as bucket prefix (required) |
-| `BucketBaseName` | String | `cfn-bucket` | Base name for S3 bucket |
-| `environment` | String | `devl` | Deployment environment (devl, stag, prod) |
-| `CiSuffix` | String | `""` | Optional CI suffix to append to bucket name |
-
-### S3 Bucket Policy Parameters
-
-**Generic (Standalone) Mode:**
-
-| Parameter | Type | Description |
-| ----------- | ------ | ------------- |
-| `BucketName` | String | Direct bucket name (use for any bucket) |
-
-**Integrated Mode (with bucket template):**
-
-| Parameter | Type | Default | Description |
-| ----------- | ------ | --------- | ------------- |
-| `ProjectName` | String | — | Project name (must match bucket template) |
-| `BucketBaseName` | String | `cfn-bucket` | Base name (must match bucket template) |
-| `environment` | String | `devl` | Environment (must match bucket template) |
-| `CiSuffix` | String | `""` | CI suffix (must match bucket template) |
-
-**Usage:** If `BucketName` is provided (non-empty), it takes precedence. Otherwise, the bucket name is constructed from ProjectName/BucketBaseName/environment/CiSuffix.
+| `ProjectName` | String | `cfn-nested` | Name prefix (lowercase letters, numbers, hyphens; max 20 chars) |
+| `Environment` | String | `devl` | Deployment environment (`devl`, `test`, `prod`) |
+| `CiSuffix` | String | `""` | Non-empty marks a CI build, which creates the REST API. Leave empty to use existing API inputs |
+| `PathPart` | String | `orders` | Path segment created under the REST API root (CI builds only) |
+| `RestApiId` | String | `""` | Existing REST API ID. Required when `CiSuffix` is empty |
+| `ParentId` | String | `""` | Parent resource ID for `PathPart`. Required when `CiSuffix` is empty |
+| `ExistingResourceId` | String | `""` | Existing resource ID the method attaches to. Required when `CiSuffix` is empty |
+| `HttpMethod` | String | `GET` | Method: `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`, `OPTIONS`, `ANY` |
+| `AuthorizationType` | String | `AWS_IAM` | `AWS_IAM` or `NONE` |
+| `LambdaFunctionArn` | String | — | ARN of the Lambda function to invoke (required) |
+| `IntegrationType` | String | `AWS_PROXY` | `AWS_PROXY` or `AWS` |
+| `IntegrationHttpMethod` | String | `POST` | HTTP method API Gateway uses to call Lambda (`POST` required for Lambda) |
 
 ## Outputs
 
-### S3 Bucket Template Outputs
-
-- `S3BucketName` — S3 bucket name
-- `S3BucketArn` — S3 bucket ARN
-
-### S3 Bucket Policy Template Outputs
-
-- `BucketName` — Bucket name with policy applied
-- `PolicyStatus` — Policy application status (Applied)
+- `RestApiMethodId` — ID of the API Gateway method
 
 ## Usage
 
-### 1. Upload Templates to S3
-
-```bash
-aws s3 cp templates/s3-bucket.yaml s3://your-cfn-bucket/templates/s3-bucket.yaml
-aws s3 cp templates/s3-bucket-policy.yaml s3://your-cfn-bucket/templates/s3-bucket-policy.yaml
-```
-
-### 2. Reference from Parent Stack
+### 1. Reference from Parent Stack
 
 In your parent/root CloudFormation template:
 
 ```yaml
-S3BucketNestedStack:
+OrdersMethodNestedStack:
   Type: AWS::CloudFormation::Stack
   Properties:
-    TemplateURL: https://s3.amazonaws.com/your-cfn-bucket/templates/s3-bucket.yaml
+    TemplateURL: https://s3.amazonaws.com/your-cfn-bucket/templates/template.yaml
     Parameters:
       ProjectName: !Ref ProjectName
-      BucketBaseName: cfn-bucket
-      environment: !Ref Environment
+      Environment: !Ref Environment
       CiSuffix: !Ref CiSuffix
-    Tags:
-      - Key: Environment
-        Value: !Ref Environment
-
-S3PolicyNestedStack:
-  Type: AWS::CloudFormation::Stack
-  DependsOn: S3BucketNestedStack
-  Properties:
-    TemplateURL: https://s3.amazonaws.com/your-cfn-bucket/templates/s3-bucket-policy.yaml
-    Parameters:
-      BucketName: !GetAtt S3BucketNestedStack.Outputs.S3BucketName
-      ProjectName: ""
-      BucketBaseName: cfn-bucket
-      environment: !Ref Environment
-      CiSuffix: !Ref CiSuffix
+      PathPart: orders
+      RestApiId: !Ref RestApiId
+      ParentId: !Ref ParentId
+      ExistingResourceId: !Ref ExistingResourceId
+      HttpMethod: GET
+      AuthorizationType: AWS_IAM
+      LambdaFunctionArn: !GetAtt ListOrdersFunction.Arn
+      IntegrationType: AWS_PROXY
+      IntegrationHttpMethod: POST
     Tags:
       - Key: Environment
         Value: !Ref Environment
 
 Outputs:
-  BucketName:
-    Value: !GetAtt S3BucketNestedStack.Outputs.S3BucketName
-  BucketArn:
-    Value: !GetAtt S3BucketNestedStack.Outputs.S3BucketArn
+  MethodId:
+    Value: !GetAtt OrdersMethodNestedStack.Outputs.RestApiMethodId
 ```
 
-### 3. Deploy Using AWS CLI
-
-#### Option A: Deploy Bucket Only
+### 2. Deploy Using AWS CLI
 
 ```bash
-# Development (without CI prefix)
+# CI build: creates the REST API, path resource, and method
 aws cloudformation create-stack \
-  --stack-name cfn-s3-bucket-dev \
-  --template-body file://templates/s3-bucket.yaml \
-  --parameters file://parameters/dev.json
-
-# Staging (without CI prefix)
-aws cloudformation create-stack \
-  --stack-name cfn-s3-bucket-stag \
-  --template-body file://templates/s3-bucket.yaml \
-  --parameters file://parameters/staging.json
-
-# Production (without CI prefix)
-aws cloudformation create-stack \
-  --stack-name cfn-s3-bucket-prod \
-  --template-body file://templates/s3-bucket.yaml \
-  --parameters file://parameters/prod.json
-```
-
-#### Option B: Deploy Bucket + Policy (Recommended)
-
-```bash
-# Deploy bucket first
-aws cloudformation create-stack \
-  --stack-name cfn-s3-bucket-dev \
-  --template-body file://templates/s3-bucket.yaml \
-  --parameters file://parameters/dev.json
-
-# Wait for bucket to be created
-aws cloudformation wait stack-create-complete --stack-name cfn-s3-bucket-dev
-
-# Get the bucket name from stack outputs
-BUCKET_NAME=$(aws cloudformation describe-stacks \
-  --stack-name cfn-s3-bucket-dev \
-  --query 'Stacks[0].Outputs[?OutputKey==`S3BucketName`].OutputValue' \
-  --output text)
-
-#### Using Integrated Mode (with bucket template parameters)
-
-```bash
-aws cloudformation create-stack \
-  --stack-name cfn-s3-policy-dev \
-  --template-body file://templates/s3-bucket-policy.yaml \
-  --parameters file://parameters/policy-dev.json
-```
-
-#### Using Generic Mode (standalone with direct bucket name)
-
-```bash
-aws cloudformation create-stack \
-  --stack-name cfn-s3-policy-dev \
-  --template-body file://templates/s3-bucket-policy.yaml \
-  --parameters \
-    ParameterKey=BucketName,ParameterValue=my-existing-bucket \
-    ParameterKey=ProjectName,ParameterValue=""
-```
-
-#### Option C: Deploy with CI Suffix
-
-```bash
-# Development with CI suffix (e.g., for GitLab CI)
-aws cloudformation create-stack \
-  --stack-name cfn-s3-bucket-dev-ci \
-  --template-body file://templates/s3-bucket.yaml \
+  --stack-name cfn-nested-aws-api-gateway-method-ci \
+  --template-body file://cloudformation/template.yaml \
   --parameters \
     ParameterKey=ProjectName,ParameterValue=myproject \
-    ParameterKey=BucketBaseName,ParameterValue=cfn-bucket \
-    ParameterKey=environment,ParameterValue=devl \
-    ParameterKey=CiSuffix,ParameterValue=$CI_PIPELINE_ID
+    ParameterKey=Environment,ParameterValue=devl \
+    ParameterKey=CiSuffix,ParameterValue=pipeline-12345 \
+    ParameterKey=LambdaFunctionArn,ParameterValue=arn:aws:lambda:us-east-1:123456789012:function:list-orders
+
+# Non-CI build: attaches the method to an existing REST API and resource
+aws cloudformation create-stack \
+  --stack-name cfn-nested-aws-api-gateway-method-devl \
+  --template-body file://cloudformation/template.yaml \
+  --parameters \
+    ParameterKey=ProjectName,ParameterValue=myproject \
+    ParameterKey=Environment,ParameterValue=devl \
+    ParameterKey=RestApiId,ParameterValue=abc123xyz \
+    ParameterKey=ParentId,ParameterValue=root456 \
+    ParameterKey=ExistingResourceId,ParameterValue=res789 \
+    ParameterKey=LambdaFunctionArn,ParameterValue=arn:aws:lambda:us-east-1:123456789012:function:list-orders
 ```
 
-## Bucket Naming Convention
+The Lambda function must also grant `apigateway.amazonaws.com` permission to invoke it. This template does not create that permission.
 
-The templates generate bucket names using the following pattern:
+## Resource Naming
 
-**Without CI Suffix:**
+With a non-empty `CiSuffix`, the REST API is named:
 
 ```bash
-{ProjectName}-{BucketBaseName}-{AccountId}-{Environment}-{Region}
+{ProjectName}-api-{AccountId}-{Environment}-{Region}-{CiSuffix}
 ```
 
-Example: `myproject-cfn-bucket-123456789012-devl-us-east-1`
-
-**With CI Suffix:**
-
-```bash
-{ProjectName}-{BucketBaseName}-{AccountId}-{Environment}-{Region}-{CiSuffix}
-```
-
-Example: `myproject-cfn-bucket-123456789012-devl-us-east-1-pipeline-12345`
+Example: `myproject-api-123456789012-devl-us-east-1-pipeline-12345`
 
 ## Best Practices Implemented
 
-- ✅ Versioning enabled by default
-- ✅ Public access blocked by default
-- ✅ Smart bucket naming with project prefix, account ID, environment, and region
-- ✅ Optional CI suffix support for unique deployments
-- ✅ Optional policy enforcement (encryption and secure transport)
-- ✅ Export values for cross-stack references
+- ✅ Authorization defaults to AWS IAM (SigV4)
+- ✅ Parameter validation for the Lambda ARN, HTTP method, and integration settings
+- ✅ REST API tagged with `ProjectName` and `Environment` for CI builds
+- ✅ Conditional logic so the same template works for CI and existing-API deployments
 
 ## License
 
